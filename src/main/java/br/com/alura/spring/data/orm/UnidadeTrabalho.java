@@ -5,14 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "cargos")
-public class Cargo {
+@Table(name = "unidades_trabalho")
+public class UnidadeTrabalho {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String descricao;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cargo")
+    private String endereco;
+    @ManyToMany(mappedBy = "unidadesTrabalho")
     private List<Funcionario> funcionarios = new ArrayList<>();
 
     public Integer getId() {
@@ -31,11 +32,29 @@ public class Cargo {
         this.descricao = descricao;
     }
 
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public List<Funcionario> getFuncionarios() {
+        return funcionarios;
+    }
+
+    public void setFuncionarios(List<Funcionario> funcionarios) {
+        this.funcionarios = funcionarios;
+    }
+
     @Override
     public String toString() {
-        return "Cargo{" +
+        return "UnidadeTrabalho{" +
                 "id=" + id +
                 ", descricao='" + descricao + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", funcionarios=" + funcionarios +
                 '}';
     }
 }

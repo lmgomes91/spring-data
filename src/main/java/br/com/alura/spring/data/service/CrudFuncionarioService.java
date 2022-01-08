@@ -6,6 +6,8 @@ import br.com.alura.spring.data.repository.CargoRepository;
 import br.com.alura.spring.data.repository.FuncionarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -15,6 +17,8 @@ import java.util.Scanner;
 public class CrudFuncionarioService {
     private final FuncionarioRepository funcionarioRepository;
     private final CargoRepository cargoRepository;
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
 
     public CrudFuncionarioService(FuncionarioRepository funcionarioRepository, CargoRepository cargoRepository) {
         this.funcionarioRepository = funcionarioRepository;
@@ -42,6 +46,10 @@ public class CrudFuncionarioService {
         System.out.println("Salario do funcionario: ");
         float salario = scanner.nextFloat();
 
+        System.out.println("Data contratacao do funcionario: ");
+        String data = scanner.next();
+        LocalDate dataFormatada = LocalDate.parse(data, formatter);
+
         System.out.println("Id do cargo: ");
         int id = scanner.nextInt();
 
@@ -57,7 +65,7 @@ public class CrudFuncionarioService {
         funcionario.setCpf(cpf);
         funcionario.setSalario(salario);
         funcionario.setCargo(cargo.get());
-        funcionario.setDataContratacao(new Date());
+        funcionario.setDataContratacao(dataFormatada);
 
         funcionarioRepository.save(funcionario);
         System.out.println("Salvo");
@@ -82,6 +90,10 @@ public class CrudFuncionarioService {
         System.out.println("Id do cargo: ");
         int id = scanner.nextInt();
 
+        System.out.println("Data contratacao do funcionario: ");
+        String data = scanner.next();
+        LocalDate dataFormatada = LocalDate.parse(data, formatter);
+
         Optional<Cargo> cargo = cargoRepository.findById(id);
 
         if(cargo.isEmpty()){
@@ -94,7 +106,7 @@ public class CrudFuncionarioService {
         funcionario.setCpf(cpf);
         funcionario.setSalario(salario);
         funcionario.setCargo(cargo.get());
-        funcionario.setDataContratacao(new Date());
+        funcionario.setDataContratacao(dataFormatada);
 
         funcionarioRepository.save(funcionario);
 

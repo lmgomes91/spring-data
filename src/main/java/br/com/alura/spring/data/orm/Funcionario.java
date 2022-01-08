@@ -1,6 +1,7 @@
 package br.com.alura.spring.data.orm;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +16,7 @@ public class Funcionario {
     private String cpf;
     private Float salario;
     @Column(name = "data_contratacao")
-    private Date dataContratacao;
+    private LocalDate dataContratacao;
     @ManyToOne
     @JoinColumn(name = "cargos_id")
     private Cargo cargo;
@@ -59,11 +60,11 @@ public class Funcionario {
         this.salario = salario;
     }
 
-    public Date getDataContratacao() {
+    public LocalDate getDataContratacao() {
         return dataContratacao;
     }
 
-    public void setDataContratacao(Date dataContratacao) {
+    public void setDataContratacao(LocalDate dataContratacao) {
         this.dataContratacao = dataContratacao;
     }
 

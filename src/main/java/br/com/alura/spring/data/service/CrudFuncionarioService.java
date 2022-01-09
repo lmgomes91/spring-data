@@ -4,6 +4,10 @@ import br.com.alura.spring.data.orm.Cargo;
 import br.com.alura.spring.data.orm.Funcionario;
 import br.com.alura.spring.data.repository.CargoRepository;
 import br.com.alura.spring.data.repository.FuncionarioRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -73,8 +77,16 @@ public class CrudFuncionarioService {
     }
 
     public void listar(Scanner scanner){
-        ArrayList<Funcionario> funcionarios = (ArrayList<Funcionario>) funcionarioRepository.findAll();
-        System.out.println(funcionarios.toString());
+        System.out.println("Qual página você deseja visualizar?");
+        Integer page = scanner.nextInt();
+
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.ASC, "nome"));
+
+        Page<Funcionario> funcionarios = funcionarioRepository.findAll(pageable);
+
+        System.out.println(funcionarios);
+        System.out.println("Pagina atual " + funcionarios.getNumber());
+        System.out.println("Total elementos " + funcionarios.getTotalElements());
     }
 
     public void atualizar(Scanner scanner){
